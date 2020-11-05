@@ -1,0 +1,25 @@
+{
+  "name": "qnap-event-to-telegram-bot",
+  "version": "1.0.0",
+  "description": "Check QNAP event logs for new entries and post them to a Telegram bot",
+  "main": "index.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dieter Verschueren",
+  "license": "MIT",
+  "dependencies": {
+    "envalid": "^6.0.1",
+    "log4js": "^6.2.1",
+    "moment": "^2.24.0",
+    "moment-duration-format": "^2.3.2",
+    "sqlite": "^4.0.15",
+    "sqlite3": "^5.0.0",
+    "telegram-bot-api": "^2.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  }
+}
