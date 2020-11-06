@@ -1,12 +1,5 @@
-FROM node:15-alpine
+FROM node:15
 EXPOSE 3000
-
-RUN apk --no-cache --virtual build-dependencies add \
-    python \
-    make \
-    g++ \
-    && npm install \
-    && apk del build-dependencies
 
 WORKDIR /usr/src/app
 
