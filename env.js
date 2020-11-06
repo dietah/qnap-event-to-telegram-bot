@@ -10,7 +10,7 @@ module.exports = envalid.cleanEnv(process.env, {
 
 	EVENT_INTERVAL:		envalid.num({ default: 60 * 1000, desc: 'Interval to check event log for new events' }),
 	EVENT_TABLE:		envalid.str({ default: 'NASLOG_EVENT', desc: 'The table where the event logs are stored' }),
-	EVENT_DB:			envalid.str({ default: 'events.db', desc: 'The name of the database' }),
+	EVENT_DB:			envalid.str({ default: 'event.log', desc: 'The name of the database' }),
 }, {
 	strict: true
 });
