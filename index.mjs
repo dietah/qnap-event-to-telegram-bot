@@ -38,7 +38,8 @@ async function processEventLog(db, telegram) {
 			await telegram.sendMessage({
 				chat_id: config.TELEGRAM_CHAT_ID,
 				text: `QNAP System event at ${date.replace(/-/g, '\\-')} ${time}:\\\n\\\n\`\`\`${desc}\`\`\``,
-				parse_mode: 'MarkdownV2'
+				parse_mode: 'MarkdownV2',
+				disable_notification: desc.includes('Failed to upload file')
 			});
 
 			logger.info(`Processed new event_id ${id}`);
