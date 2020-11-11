@@ -1,5 +1,6 @@
 .env
 db/*
+*.zip
 
 # Logs
 logs

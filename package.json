@@ -4,7 +4,8 @@
   "description": "Check QNAP event logs for new entries and post them to a Telegram bot",
   "main": "index.mjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.mjs"
   },
   "author": "Dieter Verschueren",
   "license": "MIT",
@@ -13,7 +14,6 @@
     "log4js": "^6.2.1",
     "moment": "^2.24.0",
     "sqlite": "^4.0.15",
-    "sqlite3": "^5.0.0",
     "telegram-bot-api": "^2.0.1"
   },
   "devDependencies": {
