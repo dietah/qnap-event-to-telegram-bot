@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
-import TG from 'telegram-bot-api';
+import TG from 'node-telegram-bot-api';
 
 import logger from './logger.js';
 import config from './env.js';
@@ -12,9 +12,7 @@ let latestEventId;
 
 (async () => {
 	// init Telegram
-	const telegram = new TG({
-		token: config.TELEGRAM_TOKEN
-	});
+	const telegram = new TG(config.TELEGRAM_TOKEN);
 
 	const dbConfig = {
 		filename: `db/${config.EVENT_DB}`,
@@ -42,12 +40,14 @@ async function processEventLog(dbConfig, telegram) {
 
 	for (const { event_id: id, event_date: date, event_time: time, event_desc: desc } of results) {
 		try {
-			await telegram.sendMessage({
-				chat_id: config.TELEGRAM_CHAT_ID,
-				text: `QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/<->/g, '⟷').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}</pre>`,
-				parse_mode: 'HTML',
-				disable_notification: `${desc.includes('Failed to upload file')}`
-			});
+			await telegram.sendMessage(
+				config.TELEGRAM_CHAT_ID,
+				`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/<->/g, '⟷').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}</pre>`,
+				{
+					parse_mode: 'HTML',
+					disable_notification: `${desc.includes('Failed to upload file')}`
+				}
+			);
 
 			logger.info(`Processed new event_id ${id}`);
 			latestEventId = id;
