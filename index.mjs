@@ -55,4 +55,6 @@ async function processEventLog(dbConfig, telegram) {
 			logger.error(`Message not send for event_id ${id}`, error);
 		}
 	}
+
+	await db.close();
 }
