@@ -19,7 +19,8 @@ let latestEventId;
 	// open the database
 	const db = await open({
 		filename: `db/${config.EVENT_DB}`,
-		driver: sqlite3.Database
+		driver: sqlite3.Database,
+		mode: sqlite3.OPEN_READONLY
 	});
 
 	const { id } = await db.get(`SELECT max(event_id) AS id FROM ${config.EVENT_TABLE} ORDER BY event_id DESC;`);
