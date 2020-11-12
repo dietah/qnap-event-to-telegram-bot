@@ -79,4 +79,7 @@ apply with `docker-compose -f docker-compose.yml up -d`
 
 ---
 
-Feel free to contact me or make an issue if you have a question.
+## Add to the project
+Feel free to add your comments, report issues or make a PR to the project.
+
+I hope this was of some help to at least someone.
