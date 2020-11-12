@@ -1,6 +1,3 @@
-Inspired by https://github.com/vincentcox/QNAP-pushover/blob/master/main.py
-
-
 # qnap-event-to-telegram
 What the name suggests, post events from the QNAP event logs to a Telegram chat.
 
@@ -20,8 +17,6 @@ When doing some research I found this repo https://github.com/vincentcox/QNAP-pu
 * QNAP stores the events in /etc/event.log, this log file is an Sqlite3 database format
 * Depending where you are running the code or Docker container you will need to map this file or folder
 
----
-
 ## The code
 ### Run locally
 You can run the code by:
@@ -37,8 +32,6 @@ You should be able to build the Docker container locally but take note of the cp
 ```
 docker build -t deetoreu/qnap-event-to-telegram-bot:latest .
 ```
-
----
 
 ## Deployment
 The docker container is available on Docker Hub: https://hub.docker.com/r/deetoreu/qnap-event-to-telegram-bot
