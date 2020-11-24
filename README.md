@@ -44,12 +44,13 @@ Variable | Type | Default | Description |
 LOG_LEVEL | String | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR, WARN, INFO, DEBUG, TRACE, ALL, but I reccomend keeping it on DEBUG
 TELEGRAM_TOKEN | String |  | Your Telegram Bot token
 TELEGRAM_CHAT_ID | String |  | Your Telegram Chat ID where you want the events to appear
+TELEGRAM_SILTENT_EVENTS_REGEX | String | '' | Regex for events that should receive a silent alert ([Notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) as constructor function with string pattern)
 EVENT_INTERVAL | Number | 60 * 1000 | Interval to check the event log for new events, in [ms]
 EVENT_TABLE | String | NASLOG_EVENT | In case the table would be named differently on your system
 EVENT_DB | String | event.log | The filename of the database
 
 ### Log files
-Everything is logged on the console but also saved to a file per day.
+Everything is logged on the console but also saved to a file per startup.
 If you want your logs to be persistent you can map a volume to `/usr/src/app/logs`
 
 ### Docker

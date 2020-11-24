@@ -45,7 +45,7 @@ async function processEventLog(dbConfig, telegram) {
 				`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/<->/g, '⟷').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}</pre>`,
 				{
 					parse_mode: 'HTML',
-					disable_notification: `${desc.includes('Failed to upload file')}`
+					disable_notification: `${RegExp(config.TELEGRAM_SILTENT_EVENTS_REGEX, 'g').test(desc)}`
 				}
 			);
 
