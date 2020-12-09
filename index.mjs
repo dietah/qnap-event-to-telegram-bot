@@ -42,7 +42,7 @@ async function processEventLog(dbConfig, telegram) {
 		try {
 			await telegram.sendMessage(
 				config.TELEGRAM_CHAT_ID,
-				`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/<->/g, '⟷').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&/g, '&amp;')}</pre>`,
+				`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/(<->|lt-gt)/g, '↔').replace(/(<-|-lt)/g, '←').replace(/(->|-gt)/g, '→').replace(/&/g, '&amp;')}</pre>`,
 				{
 					parse_mode: 'HTML',
 					disable_notification: `${RegExp(config.TELEGRAM_SILTENT_EVENTS_REGEX, 'g').test(desc)}`
