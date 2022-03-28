@@ -1,14 +1,6 @@
 # qnap-event-to-telegram
 What the name suggests, post events from the QNAP event logs to a Telegram chat.
 
-## Backstory
-Just a little backstory why this repo exists. I have a QNAP NAS system at home and it is running the IFTTT Agent so I could receive the NAS events via Telegram in order not to have the QNAP App installed and sending me push notifications. I also thought it was handy since it didn't involve a lot of extra work, just setting up an applet on IFTTT.
-However, recently IFTTT decided to make more than 3 applets available as a payment subscription and I no longer thurst them handling my data for free. Next to that there is a significant delay in receiving the messages up to about 10 minutes, or if the IFTTT service fails you need to reconnect it.
-
-I figured the IFTTT Agent could read the events from the NAS so I should be able to do the same as well, and even run everything locally. Now, my NAS model is too old to run Docker so I'm running everything on a Raspberry Pi 4B (4GB) with the files mounted to the Pi.
-
-When doing some research I found this repo https://github.com/vincentcox/QNAP-pushover/blob/master/main.py and decided to take a similar approach in Node.js.
-
 ## Prerequisites
 * Registeren your own Telegram bot via [@BotFather](https://core.telegram.org/bots#6-botfather)
 * You will require your bot's token
@@ -45,6 +37,7 @@ LOG_LEVEL | String | DEBUG | log4js debug level, choices are: OFF, FATAL, ERROR,
 TELEGRAM_TOKEN | String |  | Your Telegram Bot token
 TELEGRAM_CHAT_ID | String |  | Your Telegram Chat ID where you want the events to appear
 TELEGRAM_SILTENT_EVENTS_REGEX | String | '' | Regex for events that should receive a silent alert ([Notation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp) as constructor function with string pattern)
+TELEGRAM_DISCARD_EVENTS_REGEX | String | '' | Regex for events that should not be send
 EVENT_INTERVAL | Number | 60 * 1000 | Interval to check the event log for new events, in [ms]
 EVENT_TABLE | String | NASLOG_EVENT | In case the table would be named differently on your system
 EVENT_DB | String | event.log | The filename of the database
@@ -84,3 +77,13 @@ apply with `docker-compose -f docker-compose.yml up -d`
 Feel free to add your comments, report issues or make a PR to the project.
 
 I hope this was of some help to at least someone.
+
+---
+
+## Backstory
+Just a little backstory why this repo exists. I have a QNAP NAS system at home and it was running the IFTTT Agent so I could receive the NAS events via Telegram in order not to have the QNAP App installed and sending me push notifications. I also thought it was handy since it didn't involve a lot of extra work, just setting up an applet on IFTTT.
+However, a while back IFTTT decided to make more than 3 applets available as a payment subscription and I no longer thurst them handling my data for free. Next to that there is a significant delay in receiving the messages up to about 10 minutes, or if the IFTTT service fails you need to reconnect it.
+
+I figured the IFTTT Agent could read the events from the NAS so I should be able to do the same as well, and even run everything locally. Now, my NAS model is too old to run Docker so I'm running everything on NUC with the files mounted to it over the network.
+
+When doing some research I found this repo https://github.com/vincentcox/QNAP-pushover/blob/master/main.py and decided to take a similar approach in Node.js.

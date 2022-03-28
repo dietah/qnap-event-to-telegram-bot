@@ -8,6 +8,7 @@ module.exports = envalid.cleanEnv(process.env, {
 	TELEGRAM_TOKEN: 				envalid.str({ desc: 'Telegram Bot API Token' }),
 	TELEGRAM_CHAT_ID:				envalid.str({ desc: 'Telegram Chat ID' }),
 	TELEGRAM_SILTENT_EVENTS_REGEX:	envalid.str({ default: '', desc: 'Regex for events that should receive a silent alert' }),
+	TELEGRAM_DISCARD_EVENTS_REGEX:	envalid.str({ default: '', desc: 'Regex for events that should not be send' }),
 
 	EVENT_INTERVAL:					envalid.num({ default: 60 * 1000, desc: 'Interval to check event log for new events' }),
 	EVENT_TABLE:					envalid.str({ default: 'NASLOG_EVENT', desc: 'The table where the event logs are stored' }),

@@ -1,5 +1,4 @@
-import sqlite3 from 'sqlite3';
-import { open } from 'sqlite';
+import Database from 'sqlite-async';
 import TG from 'node-telegram-bot-api';
 
 import logger from './logger.js';
@@ -14,14 +13,9 @@ let latestEventId;
 	// init Telegram
 	const telegram = new TG(config.TELEGRAM_TOKEN);
 
-	const dbConfig = {
-		filename: `db/${config.EVENT_DB}`,
-		driver: sqlite3.Database
-	};
-
 	// open the database and fetch latest event id on startup
-	const db = await open(dbConfig);
-
+	const dbConfig = `db/${config.EVENT_DB}`;
+	const db = await Database.open(dbConfig, Database.OPEN_READONLY);
 	const { id } = await db.get(`SELECT max(event_id) AS id FROM ${config.EVENT_TABLE} ORDER BY event_id DESC;`);
 	logger.info(`Most recent event id is ${id}`);
 	latestEventId = id;
@@ -33,13 +27,13 @@ let latestEventId;
 
 async function processEventLog(dbConfig, telegram) {
 	logger.debug('Checking for new events');
-	const db = await open(dbConfig);
+	const db = await Database.open(dbConfig, Database.OPEN_READONLY);
 
 	// limit events per 5 to avoid too many requests on the telegram bot api
 	const results = await db.all(`SELECT * FROM ${config.EVENT_TABLE} WHERE event_id > ${latestEventId} ORDER BY event_id ASC LIMIT 5;`);
 
 	for (const { event_id: id, event_date: date, event_time: time, event_desc: desc } of results) {
-		if (!desc.includes('myQNAPcloud Link service')) {
+		if (!RegExp(config.TELEGRAM_DISCARD_EVENTS_REGEX, 'g').test(desc)) {
 			try {
 				await telegram.sendMessage(
 					config.TELEGRAM_CHAT_ID,
