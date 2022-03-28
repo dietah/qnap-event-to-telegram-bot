@@ -39,20 +39,22 @@ async function processEventLog(dbConfig, telegram) {
 	const results = await db.all(`SELECT * FROM ${config.EVENT_TABLE} WHERE event_id > ${latestEventId} ORDER BY event_id ASC LIMIT 5;`);
 
 	for (const { event_id: id, event_date: date, event_time: time, event_desc: desc } of results) {
-		try {
-			await telegram.sendMessage(
-				config.TELEGRAM_CHAT_ID,
-				`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/(<->|lt-gt)/g, '↔').replace(/(<-|-lt)/g, '←').replace(/(->|-gt)/g, '→').replace(/&/g, '&amp;')}</pre>`,
-				{
-					parse_mode: 'HTML',
-					disable_notification: `${RegExp(config.TELEGRAM_SILTENT_EVENTS_REGEX, 'g').test(desc)}`
-				}
-			);
+		if (!desc.includes('myQNAPcloud Link service')) {
+			try {
+				await telegram.sendMessage(
+					config.TELEGRAM_CHAT_ID,
+					`QNAP System event at ${date} <b>${time}</b>:\n\n<pre>${desc.replace(/(<->|lt-gt)/g, '↔').replace(/(<-|-lt)/g, '←').replace(/(->|-gt)/g, '→').replace(/&/g, '&amp;')}</pre>`,
+					{
+						parse_mode: 'HTML',
+						disable_notification: `${RegExp(config.TELEGRAM_SILTENT_EVENTS_REGEX, 'g').test(desc)}`
+					}
+				);
 
-			logger.info(`Processed new event_id ${id}`);
-			latestEventId = id;
-		} catch (error) {
-			logger.error(`Message not send for event_id ${id}`, error);
+				logger.info(`Processed new event_id ${id}`);
+				latestEventId = id;
+			} catch (error) {
+				logger.error(`Message not send for event_id ${id}`, error);
+			}
 		}
 	}
 
